@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <EasyEQ_Config.h>
 #include <Myriad_EQ.h>
+Myriad_EQ EQ;
 
 uint16_t XY(byte x, byte y) {
   uint16_t LEDaddress = x * LEDper + y;
@@ -18,7 +19,7 @@ void basic(){
   EVERY_N_MILLIS(4){
     blackout();
     for(int band = 0; band < EQbins; band++){
-      for(int leng = 0; leng < EQscaled[band]; leng++){ // Display as 00 11 22 33 44 55 66 66 55 44 33 22 11 00  CHSV(hue+leng*5-s*7, 255, 255); EQscaled[band]
+      for(int leng = 0; leng < EQ.EQscaled[band]; leng++){ // Display as 00 11 22 33 44 55 66 66 55 44 33 22 11 00  CHSV(hue+leng*5-s*7, 255, 255); EQscaled[band]
         uint8_t ahue = hue[1] +leng*5 +band*5;
         leds[XY(LEDstrips/2+band, leng)] = CHSV(ahue+leng*5, 255, 255);
         leds[XY(LEDstrips/2-1-band, leng)] = CHSV(ahue+leng*5, 255, 255);
@@ -31,7 +32,7 @@ void basic(){
 void quadplexor(){
   blackout();
   for(int band = 0; band < EQbins; band++){
-    byte z = map(EQscaled[band], 0, LEDper, 0, LEDper/2);
+    byte z = map(EQ.EQscaled[band], 0, LEDper, 0, LEDper/2);
     for(int leng = 0; leng < z; leng++){                // Display as 00 11 22 33 44 55 66 66 55 44 33 22 11 00  CHSV(hue+leng*5-s*7, 255, 255); EQscaled[band]
       leds[XY(LEDstrips/2 -1  -band,   LEDper/2    -2   -leng)] = CHSV(hue[1] + band*5 + leng*5, 255, 255);  // Top left
       leds[XY(LEDstrips/2     +band,   LEDper/2    -2   -leng)] = CHSV(hue[1] + band*5 + leng*5, 255, 255);    // Top right
@@ -56,11 +57,10 @@ void setup() {
   FastLED.addLeds<VIRTUAL_DRIVER,Pins,CLOCK_PIN, LATCH_PIN>(leds,NUM_LEDS_PER_STRIP);
   FastLED.setBrightness(25);
   FastLED.clear(true);
-  EQsampletimer = round(1000000 * (1.0 / EQsamplefreq));
 }
 
 void loop() {
-  EQproc();
+  EQ.proc();
   //basic();
   quadplexor();
   EVERY_N_MILLIS(20){
