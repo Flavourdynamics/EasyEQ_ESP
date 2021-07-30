@@ -102,7 +102,7 @@ uint8_t beat = 144;
 uint8_t beatmod = LEDper/60; // to ensure some patterns don't run too fast
 
 //State
-uint8_t STATEreadinterval = 200;
+uint8_t STATEBTinterval = 200;
 uint16_t STATEloopinterval = 25;
 uint16_t STATEshuffleinterval = 10;
 uint16_t STATEpalshuffleinterval = 10;
