@@ -8,6 +8,25 @@ uint16_t XY(byte x, byte y) {
   return LEDaddress;
 }
 
+void red(){
+  for(int i = 0; i < LEDtotal/4; i++){
+    hue[1]++;
+    leds2[i] = CRGB(255,0,0);
+  }
+}
+
+void green(){
+  for(int i = 0; i < LEDtotal/4; i++){
+    leds3[i] = CRGB(0,255,0);
+  }
+}
+
+void blue(){
+  for(int i = 0; i < LEDtotal/4; i++){
+    leds4[i] = CRGB(0,0,255);
+  }
+}
+
 void blackout() {
   for ( int i = 0; i < LEDtotal; i++) {
     leds[i] = CRGB(0, 0, 0);

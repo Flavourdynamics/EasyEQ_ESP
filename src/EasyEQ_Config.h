@@ -59,6 +59,8 @@ CRGB *leds2 = ledmatrix2[0];
 */
 CRGB leds[LEDtotal];
 CRGB leds2[LEDtotal];
+CRGB leds3[LEDtotal];
+CRGB leds4[LEDtotal];
 /*
 FastLED_NeoMatrix *matrix = new FastLED_NeoMatrix(leds, LEDtilewidth, LEDtileheight, LEDtilehorz, LEDtilevert,
   NEO_MATRIX_TOP + NEO_MATRIX_LEFT + NEO_MATRIX_COLUMNS + NEO_MATRIX_PROGRESSIVE + NEO_TILE_TOP + NEO_TILE_LEFT + NEO_TILE_PROGRESSIVE);
